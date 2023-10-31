@@ -22,8 +22,10 @@ jobs:
 
       - name: Set up Ansible
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ansible
+          sudo apt -y update
+          sudo apt install software-properties-common
+          sudo add-apt-repository --yes --update ppa:ansible/ansible
+          sudo apt -y install ansible
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
