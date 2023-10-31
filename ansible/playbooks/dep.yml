@@ -12,9 +12,7 @@
       become: yes
 
     - name: Copy Python script
-      copy:
-        src: ../../../web.app/script.py
-        dest: "/home/azureuser"
+      command: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ../../../web.app/script.py {{ secrets.AZURE_VM_USERNAME }}@{{ secrets.AZURE_VM_IP }}:/home/azureuser
       become: yes
       
     - name: Install Python
