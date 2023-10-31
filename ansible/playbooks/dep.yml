@@ -1,1 +1,22 @@
-t
+---
+- name: Test Ansible Playbook
+  hosts: your_vm  # Replace with your VM's host/group
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Ensure target directory exists
+      file:
+        path: "/var/www/scripts"
+        state: directory
+      become: yes
+
+    - name: Copy Python script
+      copy:
+        src: path/to/your/python_script.py  # Replace with the actual path
+        dest: "/var/www/scripts/hello_world.py"
+      become: yes
+
+    - name: Execute Python script
+      command: "python /var/www/scripts/hello_world.py"
+      become: yes
