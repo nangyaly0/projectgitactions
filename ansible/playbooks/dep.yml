@@ -13,7 +13,7 @@
 
     - name: Copy Python script
       copy:
-        src: ../../../web_app/path/to/your/python_script.py
+        src: ../../../web.app/script.py
         dest: "/home/azureuser/script.py"
       become: yes
     - name: Install Python
