@@ -1,6 +1,6 @@
 ---
 - name: Test Ansible Playbook
-  hosts: azure_vm
+  hosts: "${{ secrets.AZURE_VM_IP }}"
   become: yes
   gather_facts: no
 
