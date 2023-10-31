@@ -13,6 +13,9 @@
 
     - name: Copy Python script
       command: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ../../../web.app/script.py {{ secrets.AZURE_VM_USERNAME }}@{{ secrets.AZURE_VM_IP }}:/home/azureuser
+      env:
+          AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
+          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
       become: yes
       
     - name: Install Python
