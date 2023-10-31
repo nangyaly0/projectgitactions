@@ -12,7 +12,7 @@
       become: yes
 
     - name: Copy Python script
-      command: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ../../../web.app/script.py azureuser@4.206.218.61:/home/azureuser
+      command: ssh azureuser@4.206.218.61 'sudo apt-get -y update' 
 
       become: yes
       
