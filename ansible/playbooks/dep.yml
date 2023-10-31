@@ -1,22 +1,24 @@
 ---
 - name: Test Ansible Playbook
-  hosts: your_vm  # Replace with your VM's host/group
+  hosts: azure_vm
   become: yes
   gather_facts: no
 
   tasks:
     - name: Ensure target directory exists
       file:
-        path: "/var/www/scripts"
+        path: "/home/azureuser"
         state: directory
       become: yes
 
     - name: Copy Python script
       copy:
-        src: path/to/your/python_script.py  # Replace with the actual path
-        dest: "/var/www/scripts/hello_world.py"
+        src: ../../../web_app/path/to/your/python_script.py
+        dest: "/home/azureuser/script.py"
       become: yes
+    - name: Install Python
+      raw: sudo apt-get -y update && apt-get install -y python3
 
     - name: Execute Python script
-      command: "python /var/www/scripts/hello_world.py"
+      command: "python3 /home/azureuser/script.py"
       become: yes
