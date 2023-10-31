@@ -1,0 +1,37 @@
+name: Test Ansible Playbook
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set up Ansible
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+          AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
+
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i "${{ secrets.AZURE_VM_IP }}," ansible/playbooks/dep.yml
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+          AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
