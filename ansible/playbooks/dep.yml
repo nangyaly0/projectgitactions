@@ -12,7 +12,7 @@
       become: yes
 
     - name: Copy Python script
-      command: ssh azureuser@4.206.218.61 'sudo apt-get -y update' 
+      command: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ../../../web.app/script.py {{ secrets.AZURE_VM_USER }}@{{ secrets.AZURE_VM_IP }}:/home/azureuser/ 
 
       become: yes
       
