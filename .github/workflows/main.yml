@@ -20,24 +20,22 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Set up Ansible
-      #   run: |
-      #     sudo apt -y update
-      #     sudo apt install software-properties-common
-      #     sudo add-apt-repository --yes --update ppa:ansible/ansible
-      #     sudo apt -y install ansible
+      - name: Set up Ansible
+        run: |
+          sudo apt -y update
+          sudo apt -y install ansible
 
         
       - name: Establish SSH Connection to Azure VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y install docker.io"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }}
         env:
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
 
-      # - name: Run Ansible Playbook
-      #   run: ansible-playbook -i "${{ secrets.AZURE_VM_IP }}," ansible/playbooks/dep.yml
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-      #     AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i "${{ secrets.AZURE_VM_IP }}," ansible/playbooks/dep.yml
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+          AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
