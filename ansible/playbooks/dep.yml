@@ -1,6 +1,6 @@
 ---
 - name: Test Ansible Playbook
-  hosts: "{{ lookup('env', 'AZURE_VM_IP') }}"
+  hosts: azure_vm
   become: yes
   gather_facts: no
 
