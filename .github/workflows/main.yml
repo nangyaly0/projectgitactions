@@ -30,14 +30,14 @@ jobs:
         
       - name: Establish SSH Connection to Azure VM
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_IP }}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USERNAME }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y update"
         env:
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
           AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
 
-      - name: Run Ansible Playbook
-        run: ansible-playbook -i "${{ secrets.AZURE_VM_IP }}," ansible/playbooks/dep.yml
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-          AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
+      # - name: Run Ansible Playbook
+      #   run: ansible-playbook -i "${{ secrets.AZURE_VM_IP }}," ansible/playbooks/dep.yml
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+      #     AZURE_VM_USERNAME: ${{ secrets.AZURE_VM_USERNAME }}
