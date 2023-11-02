@@ -27,5 +27,10 @@ jobs:
         env:
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+          
+      - name: Add content to /etc/hosts file on Ansible VM
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "
+            echo 'FLASK_VM_IP  FLASK_VM_USER' | sudo tee -a /etc/ansible/hosts "
 
 
