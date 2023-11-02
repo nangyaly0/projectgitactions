@@ -12,11 +12,6 @@
         name: docker
         state: started
         enabled: yes
-        
-    - name: Install Docker Module for Python
-      pip:
-        name: docker
-        executable: pip3
 
     - name: Pull default Docker image
       community.docker.docker_image:
