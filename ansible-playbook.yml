@@ -9,19 +9,19 @@
         state: started
         enabled: yes
 
-   - name: Install Docker Module for Python
-     pip:
-       name: docker
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
 
-   - name: Pull default Docker image
-     community.docker.docker_image:
-       name: "alikhan0/onlinebookstore:latest"
-       source: pull
+    - name: Pull default Docker image
+      community.docker.docker_image:
+        name: "alikhan0/onlinebookstore:latest"
+        source: pull
 
-   - name: Create default Docker container
-     community.docker.docker_container:
-       name: onlinebookstore
-       image: "alikhan0/onlinebookstore:latest"
-       state: started
-       ports:
-         - "80:8080"
+    - name: Create default Docker container
+      community.docker.docker_container:
+        name: onlinebookstore
+        image: "alikhan0/onlinebookstore:latest"
+        state: started
+        ports:
+          - "80:8080"
