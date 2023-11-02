@@ -48,11 +48,21 @@ jobs:
       - name: Debug Contents of hosts.ini
         run: cat ansible/hosts.ini
 
+      # - name: Run Ansible Playbook
+      #   run: |
+      #     cd ansible
+      #     ansible-playbook -i hosts.ini playbooks/dep.yml -e "ansible_ssh_private_key_file=$HOME/.ssh/id_rsa" -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}" -e "azure_vm_user=${{ secrets.AZURE_VM_USER }}"l
+      #   env:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
+      #     AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
+
       - name: Run Ansible Playbook
         run: |
           cd ansible
-          ansible-playbook -i hosts.ini playbooks/dep.yml -e "ansible_ssh_private_key_file=$HOME/.ssh/id_rsa" -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}" -e "azure_vm_user=${{ secrets.AZURE_VM_USER }}"l
+          ansible-playbook -i hosts.ini playbooks/dep.yml -e "PLACEHOLDER_USER=${{ secrets.AZURE_VM_USER }}" -e "PLACEHOLDER_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}" -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
+
