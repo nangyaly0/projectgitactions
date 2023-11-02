@@ -1,5 +1,46 @@
 - hosts: all
   tasks:
-    - name: Print message
-      debug:
-        msg: Hello Ansible World
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Pull default Docker image
+      community.docker.docker_image:
+        name: "alikhan0/onlinebookstore:latest"
+        source: pull
+
+    - name: Create default containers
+      community.docker.docker_container:
+        name: "onlinebookstore"
+        image: "alikhan0/onlinebookstore:latest"
+        command: "docker run -d -p 80:8080 alikhan0/onlinebookstore:latest"
+        state: present
+      with_sequence: count=2 
