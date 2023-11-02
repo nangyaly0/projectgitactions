@@ -20,50 +20,12 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Set up Ansible
+      - name: Installing Ansible
         run: |
-          sudo apt -y update
-          sudo apt -y install ansible
-          
-      - name: Check Ansible Version
-        run: ansible --version
-
-        
-      - name: Establish SSH Connection to Azure VM
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }}
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y update"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get install -y ansible"
         env:
-          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
-          
-      - name: Debug Environment Variables
-        run: |
-          echo "AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}"
-          echo "AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-          AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
-      
-      - name: Debug Contents of hosts.ini
-        run: cat ansible/hosts.ini
-
-      # - name: Run Ansible Playbook
-      #   run: |
-      #     cd ansible
-      #     ansible-playbook -i hosts.ini playbooks/dep.yml -e "ansible_ssh_private_key_file=$HOME/.ssh/id_rsa" -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}" -e "azure_vm_user=${{ secrets.AZURE_VM_USER }}"l
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-      #     AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
-
-      - name: Run Ansible Playbook
-        run: |
-          cd ansible
-          ansible-playbook playbooks/dep.yml -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}" -e "azure_vm_user=${{ secrets.AZURE_VM_USER }}" -e "private_key=${{ secrets.SSH_PRIVATE_KEY }}"
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-          AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
 
 
