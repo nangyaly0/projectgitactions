@@ -5,6 +5,12 @@
 
 
   tasks:
+    - name: Copy SSH private key
+      copy:
+        content: "{{ secrets.SSH_PRIVATE_KEY }}"
+        dest: "$HOME/.ssh/id_rsa"
+      become: yes
+
     - name: Ensure target directory exists
       file:
         path: "/home/azureuser"
