@@ -2,7 +2,9 @@
   tasks:
     - name: Docker YUM
       yum:
-        name: docker 
+        name: 
+          - docker
+          - python3-pip
         state: present
 
     - name: Start Docker service
@@ -10,15 +12,11 @@
         name: docker
         state: started
         enabled: yes
-
-    - name: Install Python pip
-      yum:
-        name: python3-pip
-        state: present
         
     - name: Install Docker Module for Python
       pip:
         name: docker
+        executable: pip3
 
     - name: Pull default Docker image
       community.docker.docker_image:
