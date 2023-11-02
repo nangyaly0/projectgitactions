@@ -22,8 +22,8 @@ jobs:
 
       - name: Installing Ansible
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y update"
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get install -y ansible && mkdir ajmer"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y update && sudo apt -y install software-properties-common"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt-get install -y ansible"
         env:
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
