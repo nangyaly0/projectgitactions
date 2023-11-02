@@ -1,7 +1,9 @@
 - hosts: all
   tasks:
-    - name: Add Docker YUM repo
-      command: amazon-linux-extras install -y docker
+    - name: Docker YUM
+      yum:
+        name: docker 
+        state: present
 
     - name: Start Docker service
       service:
