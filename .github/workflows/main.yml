@@ -60,9 +60,10 @@ jobs:
       - name: Run Ansible Playbook
         run: |
           cd ansible
-          ansible-playbook -i hosts.ini playbooks/dep.yml -e "PLACEHOLDER_USER=${{ secrets.AZURE_VM_USER }}" -e "PLACEHOLDER_PRIVATE_KEY=${{ secrets.SSH_PRIVATE_KEY }}" -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}"
+          ansible-playbook playbooks/dep.yml -e "azure_vm_ip=${{ secrets.AZURE_VM_IP }}" -e "azure_vm_user=${{ secrets.AZURE_VM_USER }}" -e "private_key=${{ secrets.SSH_PRIVATE_KEY }}"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
           AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
+
 
