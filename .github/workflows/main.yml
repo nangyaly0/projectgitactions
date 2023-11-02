@@ -20,9 +20,16 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Install Python and Ansible
+        run: |
+          sudo apt-add-repository ppa:ansible/ansible
+          sudo apt update
+          sudo apt install ansible
+          sudo chmod 777 /etc/ansible/ansible.cfg
+          sudo cat ansible.cfg > /etc/ansible/ansible.cfg
+          cat /etc/ansible/ansible.cfg
+
       - name: Deploy with Ansible
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: False
-        run: ansible-playbook -i "52.72.161.189" -u "ec2-user" ansible-playbook.yml
+        run: ansible-playbook -i "52.72.161.189" -u "ec2-user" --private-key ${{ secrets.SSH_PRIVATE_KEY }} ansible-playbook.yml
         env:
           ANSIBLE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
