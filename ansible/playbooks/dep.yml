@@ -1,6 +1,6 @@
 ---
 - name: Test Ansible Playbook
-  hosts: azure_vm
+  hosts: localhost
   become: yes
 
 
