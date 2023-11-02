@@ -23,9 +23,6 @@ jobs:
       - name: Deploy with Ansible
         env:
           ANSIBLE_HOST_KEY_CHECKING: False
-        run: ansible-playbook -i "your-azure-vm-ip," -u "your-azure-vm-user" ansible-playbook.yml
-        working-directory: ./path/to/playbook-directory
-        with:
-          playbook: ansible-playbook.yml
+        run: ansible-playbook -i "52.72.161.189" -u "ec2-user" ansible-playbook.yml
         env:
           ANSIBLE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
