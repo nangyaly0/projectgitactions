@@ -20,17 +20,12 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Installing Ansible
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo apt-get -y update && sudo apt -y install software-properties-common"
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt-get install -y ansible"
+      - name: Deploy with Ansible
         env:
-          AZURE_VM_USER: ${{ secrets.AZURE_VM_USER }}
-          AZURE_VM_IP: ${{ secrets.AZURE_VM_IP }}
-          
-      - name: Add content to /etc/hosts file on Ansible VM
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.AZURE_VM_USER }}@${{ secrets.AZURE_VM_IP }} "
-            echo '{{ secrets.FLASK_VM_IP }}  {{ secrets.FLASK_VM_USER }}' | sudo tee -a /etc/ansible/hosts "
-
-
+          ANSIBLE_HOST_KEY_CHECKING: False
+        run: ansible-playbook -i "your-azure-vm-ip," -u "your-azure-vm-user" ansible-playbook.yml
+        working-directory: ./path/to/playbook-directory
+        with:
+          playbook: ansible-playbook.yml
+        env:
+          ANSIBLE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
