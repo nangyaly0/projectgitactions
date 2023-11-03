@@ -5,7 +5,6 @@
         name: 
           - docker
           - python3-pip
-          - docker-compose
         state: present
 
     - name: Start Docker service
@@ -19,5 +18,18 @@
         name: "alikhan0/onlinebookstore:latest"
         source: pull
 
-    - name: Run Docker Compose
-      command: docker-compose up -d
+    - name: Create mySQL Docker container
+      community.docker.docker_container:
+        name: mysqldb
+        image: "alikhan0/mysqldb:latest"
+        state: started
+        ports:
+          - "3306:3306"
+        
+    - name: Create Web Java Docker container
+      community.docker.docker_container:
+        name: onlinebookstore
+        image: "alikhan0/onlinebookstore:latest"
+        state: started
+        ports:
+          - "80:8080"
