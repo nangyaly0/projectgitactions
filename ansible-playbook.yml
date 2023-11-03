@@ -19,4 +19,4 @@
         source: pull
 
     - name: Run Docker Compose
-      command: docker-compose -f ./docker-compose.yml up -d
+      command: docker-compose up -d
