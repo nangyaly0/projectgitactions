@@ -23,6 +23,8 @@
         name: mysqldb
         image: "alikhan0/mysqldb:latest"
         state: started
+        ports:
+          - "3306:3306"
         
     - name: Create Web Java Docker container
       community.docker.docker_container:
