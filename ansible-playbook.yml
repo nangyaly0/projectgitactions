@@ -5,6 +5,7 @@
         name: 
           - docker
           - python3-pip
+          - docker-compose
         state: present
 
     - name: Start Docker service
