@@ -19,8 +19,8 @@ jobs:
 
       - name: Build the docker image
         run: |
-           docker build . -t alikhan0/onlinebookstore:latest -f Docker-files/app/Dockerfile
-           docker build . -t alikhan0/mysqldb:latest -f Docker-files/db/Dockerfile
+           docker build . -t alikhan0/onlinebookstore:latest -f ./Docker-files/app/Dockerfile
+           docker build . -t alikhan0/mysqldb:latest -f ./Docker-files/db/Dockerfile
           
       - name: push Docker image
         run: |
