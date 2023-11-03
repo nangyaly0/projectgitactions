@@ -18,10 +18,16 @@
         name: "alikhan0/onlinebookstore:latest"
         source: pull
 
-    - name: Create default Docker container
+    - name: Create Web Java Docker container
       community.docker.docker_container:
         name: onlinebookstore
         image: "alikhan0/onlinebookstore:latest"
         state: started
         ports:
           - "80:8080"
+
+    - name: Create mySQL Docker container
+      community.docker.docker_container:
+        name: mysqldb
+        image: "alikhan0/mysqldb:latest"
+        state: started
