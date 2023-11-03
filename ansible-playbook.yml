@@ -18,6 +18,12 @@
         name: "alikhan0/onlinebookstore:latest"
         source: pull
 
+    - name: Create mySQL Docker container
+      community.docker.docker_container:
+        name: mysqldb
+        image: "alikhan0/mysqldb:latest"
+        state: started
+        
     - name: Create Web Java Docker container
       community.docker.docker_container:
         name: onlinebookstore
@@ -25,9 +31,3 @@
         state: started
         ports:
           - "80:8080"
-
-    - name: Create mySQL Docker container
-      community.docker.docker_container:
-        name: mysqldb
-        image: "alikhan0/mysqldb:latest"
-        state: started
