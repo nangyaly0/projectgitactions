@@ -17,14 +17,6 @@
       community.docker.docker_image:
         name: "alikhan0/onlinebookstore:latest"
         source: pull
-
-    - name: Create mySQL Docker container
-      community.docker.docker_container:
-        name: mysqldb
-        image: "alikhan0/mysqldb:latest"
-        state: started
-        ports:
-          - "3306:3306"
         
     - name: Create Web Java Docker container
       community.docker.docker_container:
